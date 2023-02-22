@@ -1,1 +1,65 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Gabibag</title>
+    <style>
+        html {
+            overflow-x: hidden;
+        }
 
+        body {
+            overflow-x: hidden;
+            background-color: #05010d;
+        }
+
+        .title {
+            position: relative;
+            overflow-x: hidden;
+            width: 100%;
+            background-color: #05010d;
+            background-image: radial-gradient(at center, #041b49, transparent);
+            text-align: center;
+            height: 100%;
+            padding-top: 10%;
+            padding-bottom: 30%;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            z-index: -2;
+            flex-direction: column;
+        }
+
+        h1 {
+            font-family: 'Space Mono', monospace;
+            font-weight: normal;
+            color: white;
+            position: sticky;
+            top: inherit;
+            margin-bottom: 20%;
+            font-size: xxx-large;
+        }
+    </style>
+
+</head>
+
+<body>
+<div class="title">
+    <h1 id="htitle">GABIBAG</h1>
+</div>
+<script>
+    function scramble (event) {
+        alert("aadsfdsfg")
+        console.log(event.target.innerText);
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+        return event.target.innerText = event.target.innerText.split("")
+            .map(letters[Math.floor(Math.random() * 26)])
+            .join("");
+    }
+
+    console.log("a")
+    console.log(document.querySelector("h1"));
+    document.querySelector("h1").addEventListener("click", scramble);
+    document.getElementById("htitle").addEventListener("click", scramble);
+</script>
+</body>
