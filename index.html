@@ -17,6 +17,22 @@
         overflow-y: hidden;
         background: #00020E;
     }
+    .title{
+        color: #FFF;
+        text-align: center;
+        font-family: Montserrat,serif;
+        font-weight: normal;
+    }
+    #loadingText{
+        font-size: 5vw;
+        font-style: normal;
+        font-weight: 900;
+        line-height: normal;
+        display: block;
+        position: relative;
+        margin-bottom: auto;
+        top:34vh;
+    }
     #mainTitle{
         color: #FFF;
         text-align: center;
@@ -182,11 +198,35 @@
         }
 
     }
+    @keyframes fadeUp {
+        0% {
+            opacity: 1;
+            top: 0;
+        }
+        100% {
+            opacity: 0;
+            top: -100vh;
+        }
+
+    }
+    #loadingScreen{
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        background: #00020E;
+        z-index: 100;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
 
 </style>
 
 <body>
+<div id="loadingScreen">
+    <span class="title" id="loadingText">Loading...</span>
+</div>
 <div class="title">
     <span id="mainTitle">Gabi Minto</span>
     <span id="subText">I haven’t done anything important.</span>
@@ -318,8 +358,14 @@
             // projectTexts[i].addEventListener("mouseover", stopScramble.bind(projectTexts[i]));
         }
     }
-
-    loadPage();
+    function removeLoadingScreen() {
+        document.getElementById("loadingScreen").style.animation = "fadeUp 1s ease-out forwards";
+        setTimeout(function () {
+            document.getElementById("loadingScreen").style.display = "none";
+        }, 1000);
+    }
+    setInterval(removeLoadingScreen, 2000);
+    setTimeout(loadPage, 1800);
     //     on  mouse over, stretch the project box to float over the other boxes
     function hover(self) {
         if (self.style.backgroundPositionY !== "0px") return;
