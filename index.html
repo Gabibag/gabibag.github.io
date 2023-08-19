@@ -254,7 +254,7 @@
     <a class="projectBox" href="https://github.com/WilyHyperion/IllegalChess" id="chess" onmouseenter="hover(this)"
        onmouseleave="unHover(this)">
         <div class="projectInfo">
-            <span class="projectText" id="Illegal_Chess">Illegal Chess</span>
+            <span class="projectText" id="Illegal_Chess">illegal_chess</span>
         </div>
 
     </a>
@@ -285,7 +285,7 @@
                 let displayText = this.innerHTML;
                 let textInterval = setInterval(function () {
                     let replChar = textArray[j];
-                    displayText = displayText.replace(displayText.charAt(j), replChar);
+                    displayText = displayText.replaceAt(j, replChar);
                     projectTexts[i].innerHTML = displayText;
                     j++;
                     if (j >= textArray.length) {
@@ -385,11 +385,14 @@
         return (50* num) ;
     }
 
+    String.prototype.replaceAt = function(index, replacement) {
+        return this.substring(0, index) + replacement + this.substring(index + 1);
+    }
     function resetText(reset) {
         if (reset.innerHTML === reset.id) return;
         for (let i = 0; i < reset.id.length; i++) {
             setTimeout(function () {
-                reset.innerHTML = reset.innerHTML.replace(reset.innerHTML.charAt(i), reset.id.charAt(i));
+                reset.innerHTML = reset.innerHTML.replaceAt(i, reset.id.charAt(i));
             }, getScrambleDuration(i));
 
         }
@@ -404,7 +407,7 @@
         let textArray = text.split("");
         for (let i = 0; i < textArray.length; i++) {
             setTimeout(function () {
-                project.innerHTML = project.innerHTML.replace(project.innerHTML.charAt(i), "#");
+                project.innerHTML = project.innerHTML.replaceAt(i, "#");
             }, getScrambleDuration(i));
         }
         let projid = project.id;
