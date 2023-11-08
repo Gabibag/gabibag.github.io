@@ -309,43 +309,12 @@
 
     }
 
-    #OSGenScreen {
-        /*    full black screen*/
-        position: absolute;
-        width: 100vw;
-        height: 100vh;
-        background: #000;
-        z-index: 200;
-    }
 
-    #terminal {
-        /*    centered vertically and horizontially, with left aligned text*/
-        position: absolute;
-        width: 50vw;
-        height: 50vh;
-        top: 25vh;
-        left: 25vw;
-        background: #000;
-        color: #FFF;
-        font-family: 'Source Code Pro', monospace;
-        font-size: 2.5vw;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-        text-align: left;
-        display: block;
-        position: absolute;
-        padding-left: 10px;
-        cursor: none;
-    }
 </style>
 
 <body>
-<div id="OSGenScreen">
-    <div id="terminal">
-    </div>
-</div>
 <div id="loadingScreen">
+
     <span class="title" id="loadingText">Welcome</span>
     <input class="inputBox" id="loginBox" onclick="" placeholder="Login">
     <input class="inputBox" id="passwordBox" onclick="" placeholder="Password" type="password">
@@ -387,75 +356,80 @@
 </div>
 </body>
 <script>
-    function GetUsername() {
-        let userNamesAdj = ["Wandering", "Soaring", "Swimming", "Floating", "Magical", "Mathematical", "Minty", "Stumbling", "Misspelled", "Pocket", "Tiny", "Obscure", "Magical", "Undercover", "Sparkling", "Maniacal", "Differentiating"]
-        let userNamesNoun = ["Platypus", "Fish", "Wombat", "Wizard", "Train", "Car", "House", "Ticket", "Seven", "Penguin", "Computer", "Window", "Apple", "Leaf", "Semicolon", "Flame", "Star", "Snake", "Symbol", "Ornament", "Seascape", "Territory"]
-        let differentiator = ["_", ""]
-        return userNamesAdj[Math.floor(Math.random() * userNamesAdj.length)] + differentiator[Math.floor(Math.random() * differentiator.length)] + userNamesNoun[Math.floor(Math.random() * userNamesNoun.length)];
-    }
+<!--    vars -->
+    document.addEventListener("DOMContentLoaded", function () {
+        if (document.cookie.indexOf("username") === -1) {
+            setTimeout(function () {
+                loginAnimation(1)
+            },timeout*30)
+        } else {
+            setTimeout(function () {
+                loginScreen();
+            },timeout*6)
+        }
+    });
+    let timeout = 50;
+    let runScramble = true;
+    const projectTexts = document.getElementsByClassName("projectText");
 
-    function getPassword() {
+
+    for (let i = 0; i < document.getElementsByClassName("inputBox").length; i++) {
+        document.getElementsByClassName("inputBox")[i].disabled = true;
+    }
+    function createUsername() {
+        let userNamesAdj = ["Wandering", "Soaring", "Swimming", "Floating", "Magical", "Mathematical", "Minty", "Stumbling", "Misspelled", "Pocket", "Tiny", "Obscure", "Magical", "Undercover", "Sparkling", "Maniacal", "Differentiating", "Burning","Categorical","Undeniable", "Shocking","Undetermined", "Determined","Freeing","Computing","Understanding","Spilt","Spontanous","Unsyncing","Stalled", "Speedy","Slowed", "Mystical","Lost", "Salty", "Sweet", "Soft", "Unified","Unrelenting","Niche", "Spiraling", "Rough", "Spiky","Stuffy","Peculiar", "Positive", "Loud", "Quiet", "Submerged","Silky"]
+        let userNamesNoun = ["Platypus", "Fish", "Wombat", "Wizard", "Train", "Car", "House", "Ticket", "Seven", "Penguin", "Computer", "Window", "Apple", "Leaf", "Semicolon", "Flame", "Star", "Snake", "Symbol", "Ornament", "Seascape", "Territory","Snail","Scar","Sky","Sea","Door","Knob","Dough","Bread","Keyboard","Mouse","Leach","Spice","Sink","Faucet","Cup","Mug","Plate","Bowl","Spoon","Fork","Knife","Pencil","Pen","Paper","Notebook","Book","Novel","Story","Tale","Teller","Singer","Song","Music","Melody","Rhythm","Beat","Drum","Guitar","Piano","Trumpet","Trombone","Tuba","Flute"]
+        let differentiator = ["_", ""]
+
+        return userNamesAdj[Math.floor(Math.random() * userNamesAdj.length)] + differentiator[Math.floor(Math.random() * differentiator.length)] + userNamesNoun[Math.floor(Math.random() * userNamesNoun.length)];
+
+    }
+    function createPassword() {
         //toatally accurate password generator
         let password = "";
         let chars = "qwertyuiopasdfghjklzxcvbnm1234567890!@#$%^&*()_+";
         for (let i = 0; i < (Math.random() * 10) + 10; i++) {
             password += chars.charAt(Math.floor(Math.random() * chars.length));
+
         }
-
         return password;
-    }
 
+    }
     function slowTypeBox(text, inputBox, timeout) {
         if (text === undefined) {
             console.log("undefined");
-        }
 
+        }
         for (let i = 0; i < text?.length; i++) {
-            //     add a randomly generated username to the loginbox slowly
             setTimeout(function () {
                 inputBox.value += text.charAt(i);
             }, timeout * i);
         }
-    }
 
-    function slowTypeText(text, elem, timeout) {
-        elem.innerText = "";
-        if (text === undefined) {
-            console.log("undefined");
-        }
 
-        for (let i = 0; i < text?.length; i++) {
-            setTimeout(function () {
-                elem.innerText += text.charAt(i);
-            }, timeout * i);
-        }
+
     }
 
     function loginAnimation(recursive) {
         if (recursive === 0) {
             return "n/o";
-        }
 
-        //     get the login box and password box
+        }
         let loginBox = document.getElementById("loginBox");
 
         let passwordBox = document.getElementById("passwordBox");
-        let userName = GetUsername();
-        let password = getPassword();
-        let timeout = 50;
+        let userName = createUsername();
+        let password = createPassword();
         slowTypeBox(userName, loginBox, timeout);
+
         setTimeout(function () {
             slowTypeBox(password, passwordBox, timeout);
         }, timeout * userName.length + timeout * 10);
-
         setTimeout(function () {
-            if (recursive === 1) {
-                saveLogin(password.toString() + "/" + userName.toString())
-                removeLoadingScreen();
-                loadPage()
-                console.log("ending");
-                return password + "/" + userName;
-            }
+            saveLogin(password.toString() + "/" + userName.toString())
+            removeLoadingScreen();
+            loadPage()
+            return password + "/" + userName;
             passwordBox.style.animation = "shakeError 0.4s cubic-bezier(.66,-0.71,.3,1.73) forwards";
             //delete the password and username one character at a time
             for (let i = 0; i < userName.length; i++) {
@@ -475,49 +449,53 @@
             setTimeout(function () {
                 loginAnimation(recursive - 1);
             }, (timeout * userName.length + timeout * password.length) * 2 + timeout * 15);
-        }, timeout * userName.length + timeout * password.length + timeout * 15)
+        }, timeout * userName.length + timeout * password.length + timeout * 15 )
     }
 
     function saveLogin(pass) {
         document.cookie = "username=" + pass?.split("/")[1] + ";";
         document.cookie = "password=" + pass?.split("/")[0] + ";";
+
+
     }
-
-
     function loginKnown() {
         let cookies = document.cookie.split(';');
         console.log(cookies);
-        let login = cookies[1]?.split("=")[1];
-        let password = cookies[2]?.split("=")[1];
-        console.log(login, password)
-        slowTypeBox(login, document.getElementById("loginBox"), 70);
+        let login = cookies[0]?.split("=")[1];
+
+        let password = cookies[1]?.split("=")[1];
+
+        slowTypeBox(login, document.getElementById("loginBox"), timeout);
+
 
         setTimeout(function () {
-            slowTypeBox(password, document.getElementById("passwordBox"), 70);
-        }, login.length * 70 + 800);
-
+            slowTypeBox(password, document.getElementById("passwordBox"), timeout);
+        }, login.length * timeout + (timeout*10));
 
     }
-
     function loginScreen() {
         let cookies = document.cookie?.split(';');
+        console.log(cookies[1]);
         if (cookies.findIndex((cookie) => cookie.includes("username")) === -1) {
-            loginAnimation(/*Math.floor(Math.random() * 2) + 4*/ 4);
-        } else {
+            setInterval(function () {
+                loginAnimation(1);
+            },1000)
+        }
+        else {
             setTimeout(function () {
                 loginKnown();
                 setTimeout(function () {
                     removeLoadingScreen();
                     loadPage()
-                }, cookies[1].split("=")[1].length * 70 + cookies[2].split("=")[1].length * 70 +1200);
-            }, 200);
+                }, cookies[0].split("=")[1].length * timeout + cookies[1].split("=")[1].length * timeout +(timeout*17));
+            }, timeout * 6);
         }
-    }
 
+    }
     function elipsesTravel(text, elem, duration, interval) {
         // slowly type out the text first, then add elipses
-        slowTypeText(text, elem, interval / 4)
 
+        // slowTypeText(text, elem, interval / 4)
         setTimeout(function () {
             for (let j = 0; j < duration / 4; j++) {
                 for (let i = 0; i < 4; i++) {
@@ -533,118 +511,20 @@
             }
 
         }, interval / 4 * text.length);
+
     }
 
     let waits = 0;
-
     function getTravelDuraion(duration, interval, text) {
-        waits += (duration * interval) + ((interval / 4) * text.length) + 100;
 
+        waits += (duration * interval) + /*((interval / 4) * text.length)*/ + 00;
         console.log(waits)
         return waits;
-    }
 
+    }
     function replaceText(text, elem) {
         elem.innerText = text;
     }
-
-    function loadOS() {
-        // essentiall adds text to the terminal to make it seem like its doing something
-        let terminal = document.getElementById("terminal")
-        let defaultDuration = 200;
-        let liscence = getLiscence();
-
-        setTimeout(function () {
-            elipsesTravel("LoadingOS", terminal, 20, defaultDuration);
-            setTimeout(elipsesTravel, getTravelDuraion(20, defaultDuration, "LoadingOS"), "Downloading Assests", terminal, 20, defaultDuration);
-            setTimeout(elipsesTravel, getTravelDuraion(20, defaultDuration, "DownloadingAssets"), "New User Detected, Generating Unique Key", terminal, 8, defaultDuration);
-            setTimeout(elipsesTravel, getTravelDuraion(8, defaultDuration, "New User Detected, Generating Unique Key"), "Key Generated, listing", terminal, 20, defaultDuration);
-            setTimeout(slowTypeText, getTravelDuraion(20, defaultDuration, "Key Generated, listing"), "Key: " + liscence, terminal, defaultDuration/4);
-            setTimeout(elipsesTravel, getTravelDuraion(20, defaultDuration, "Key: " + liscence), "Starting Up", terminal, 20, defaultDuration);
-            setTimeout(function () {
-                document.getElementById("OSGenScreen").innerHTML = "";
-                document.cookie += "liscence=" + liscence + ";";
-                setTimeout(function () {
-                    document.getElementById("OSGenScreen").style.display = "none";
-                    loginAnimation(4)
-                }, 1000);
-            }, getTravelDuraion(20, defaultDuration, "Starting Up"));
-        },1000);
-
-
-    }
-
-    function getLiscence() {
-        let r = Math.floor((Math.random() * 4) + 1);
-        let liscence = "";
-        let length = 0
-        let charList = [];
-        if (r === 1) {
-            liscence = "mSK-" //music scales, sharps, flats, etc. maybe?
-            charList = ["C", "D", "E", "F", "G", "A", "B", "#", "b", "x"]
-            length = 29;
-        } else if (r === 2) {
-            liscence = "sk-" //openai key cuz reference
-            charList = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
-            //50 keys
-            length = 50;
-        } else if (r === 3) {
-            //shakesperean words missing their vowels or consonants
-            liscence = "sPW-"
-            charList = ["Hiems", "Puissance", "Malmsey", "Sneap", "Sluggardiz’d", "Mobbled", "Egregious", "Consanguineous", "Mated", "Caper", "Expiate", "Foison", "Guileful", "Bacchanal", "Raiment"]
-            for (let i = 0; i < charList.length; i++) {
-                //count the vowels, if there are less than 2, remove, them all, if not, remove all consonants
-                charList[i] = charList[i].toLowerCase()
-                let vowelCount = 0;
-                for (let j = 0; j < charList[i].length; j++) {
-                    if (charList[i].charAt(j).toLowerCase() === "a" || charList[i].charAt(j).toLowerCase() === "e" || charList[i].charAt(j).toLowerCase() === "i" || charList[i].charAt(j).toLowerCase() === "o" || charList[i].charAt(j).toLowerCase() === "u") {
-                        vowelCount++;
-                    }
-                }
-                if (vowelCount < 2) {
-                    charList[i] = charList[i].replace(/[aeiou]/gi, '');
-                } else {
-                    charList[i] = charList[i].replace(/[^aeiou]/gi, '');
-                }
-            }
-            length = 30;
-
-        } else if (r === 4) {
-            //wonder what this says
-            liscence = "eI-"
-            charList = ["19 15 13 5 20 9 13 5 19 9 23 15 14 4 5 18 8 15 23 19 13 1 18 20 19 15 13 5 15 14 5 8 1 19 20 15 2 5 20 15 16 12 21 7 20 8 9 14 7 19 9 14 20 15 1 13 1 3 8 9 14 5 1 14 4 20 8 5 14 18 5 1 12 9 26 5 20 8 1 20 19 23 8 1 20 9 4 15"
-                , "13 1 25 2 5 25 15 21 19 8 15 21 12 4 7 15 20 15 21 3 8 19 15 13 5 7 18 1 19 19 ",
-                "25 15 21 1 3 20 21 1 12 12 25 8 1 22 5 14 15 12 9 6 5 "]
-            for (let i = 0; i < charList.length; i++) {
-                charList[i] = charList[i].split(" ");
-                for (let j = 0; j < charList[i].length; j++) {
-                    charList[i][j] = parseInt(charList[i][j]);
-                    charList[i][j] *= 29;
-                }
-                charList[i] = charList[i].join("_");
-            }
-            length = 1;
-
-
-        }
-        for (let i = 0; i < length; i++) {
-            liscence += charList[Math.floor(Math.random() * charList.length)];
-        }
-        console.log("generated liscence");
-        return liscence;
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-        if (document.cookie.indexOf("username") === -1) {
-            loadOS();
-        } else {
-            document.getElementById("OSGenScreen").innerHTML = "";
-            document.getElementById("OSGenScreen").style.display = "none";
-            loginScreen();
-        }
-    });
-    let runScramble = true;
-    const projectTexts = document.getElementsByClassName("projectText");
 
     function loadPage() {
         for (let i = 0; i < projectTexts.length; i++) {
@@ -746,7 +626,6 @@
         }, 1000);
     }
 
-    //     on  mouse over, stretch the project box to float over the other boxes
     function hover(self) {
         if (self.style.backgroundPositionY !== "0px") return;
         self.style.animation = "backgroundSpin 0.7s cubic-bezier(0,.79,0,1.01) forwards";
