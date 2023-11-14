@@ -11,31 +11,41 @@
     /*html {*/
     /*    overflow-x: hidden;*/
     /*}*/
+    :root{
+        --bg: black;
+        --text: white;
+        --accent: #2a2a2a;
+        --anim-transition: cubic-bezier(0, .79, 0, 1.01); /*This is the load after the "log in" animation*/
+        --transition: cubic-bezier(.24,1.11,.49,.96);
+        --duration: 0.7s;
+    }
+
     * {
         font-family: Montserrat, serif;
+        color: var(--text);
+        font-style: normal;
+        line-height: normal;
     }
 
     body {
-        overflow-y: hidden;
-        background: #00020E;
+        background: var(--bg);
     }
 
     .title {
-        color: #FFF;
         text-align: center;
         font-family: Montserrat, serif;
         font-weight: normal;
     }
 
+
     #mainTitle {
-        color: #FFF;
         text-align: center;
         text-shadow: 0 1px 4px rgba(255, 255, 255, 0.25);
         font-family: Montserrat, serif;
         font-size: 63px;
-        font-style: normal;
+
         font-weight: 900;
-        line-height: normal;
+
         display: block;
         position: relative;
         top: 4vh;
@@ -43,13 +53,10 @@
     }
 
     #subText {
-        color: #FFF;
         text-align: center;
         font-family: Montserrat, serif;
         font-size: 18px;
-        font-style: normal;
         font-weight: 900;
-        line-height: normal;
         display: block;
         position: relative;
         top: 4vh;
@@ -72,11 +79,12 @@
 
     .projectBox {
         border-radius: 17px;
-        background: #1A1C27;
+        background: var(--accent);
         text-align: center;
         align-content: center;
         width: 100%;
         height: 100%;
+        transition: 0.7s var(--transition);
         /*    center content*/
         display: flex;
         justify-content: center;
@@ -85,17 +93,18 @@
         opacity: 1;
         transition: 0.2s ease-out;
         margin-bottom: 1%;
+        filter: grayscale(1);
+        background-position-y: 400px;
+        background-clip: content-box;
+        background-repeat: no-repeat;
+        background-size: cover;
     }
 
     .projectText {
-        color: #FFF;
         text-align: center;
-        /*font-family: Montserrat,serif;*/
         font-family: 'Source Code Pro', monospace;
         font-size: 4.5vw;
-        font-style: normal;
         font-weight: 900;
-        /*line-height: 7.5vh;*/
         position: relative;
 
         /*    centered*/
@@ -112,6 +121,7 @@
         display: inline-flex;
         justify-content: center;
         vertical-align: center;
+
     }
 
     .icons {
@@ -130,39 +140,25 @@
     }
 
     #keeper {
-        /*width: 50%;*/
-        /*height: 40%;*/
-        background-image: url("https://drive.google.com/uc?export=download&id=1u91lM-8vi2IjxRrRW0is83IfIG7bGVMm");
-        background-size: cover;
-        background-position-y: 400px;
-        background-clip: content-box;
-        background-repeat: no-repeat;
+        background-image: url("https://drive.google.com/uc?export=download&id=1lIaUYrm1DPrOel3JMGXcm5Axirwhxr9T");
         grid-area: 2 / 1 / 3 / 3;
-        transition: 0.7s cubic-bezier(0, .79, 0, 1.01);
+    }
+
+    #sylmProject{
+        background-image: url("https://drive.google.com/uc?export=download&id=1S3ZkX8VJvvNH7rS5cIG2yTIN0d2P8vAl");
+        grid-area: 3 / 1 / 4 / 4;
     }
 
     #githubLink {
-        background-image: url("https://drive.google.com/uc?export=download&id=1u91lM-8vi2IjxRrRW0is83IfIG7bGVMm");
-        background-position-y: 400px;
-        background-clip: content-box;
-        background-repeat: no-repeat;
-        background-size: cover;
-        transition: 0.7s cubic-bezier(0, .79, 0, 1.01);
+        background-image: url("https://drive.google.com/uc?export=download&id=1OAiMApiuYEvVkD_0Cq9EyCI9VwNYviiX");
         grid-area: 1 / 1 / 2 / 5;
-        background-color: #1A1C27;
     }
 
     #chess {
-        /*width: 50%;*/
-        /*height: 40%;*/
-        background-image: url("https://drive.google.com/uc?export=download&id=1u91lM-8vi2IjxRrRW0is83IfIG7bGVMm");
-        background-size: cover;
-        background-position-y: 400px;
-        background-clip: content-box;
-        background-repeat: no-repeat;
-        transition: 0.7s cubic-bezier(0, .79, 0, 1.01);
+        background-image: url("https://drive.google.com/uc?export=download&id=1yJIJDg_81Xz37XwbzZwQRfHWk3ju_3O0");
         grid-area: 2 / 3 / 3 / 5;
     }
+
 
 
     @keyframes showIcon {
@@ -185,20 +181,51 @@
 
     @keyframes backgroundSpin {
         0% {
-            background-position-y: 0;
+            background-position-y: -20px;
         }
         100% {
-            background-position-y: -8vh;
+            background-position-y: -40px;
         }
 
     }
 
     @keyframes backgroundSpinReverse {
         0% {
-            background-position-y: -8vh;
+            background-position-y: -40px;
         }
         100% {
-            background-position-y: 0;
+            background-position-y: -20px;
+        }
+
+    }
+
+    @keyframes backgroundZoomBack {
+        0% {
+            background-size: 100%;
+            background-position-x: 50%;
+        }
+        40%{
+            background-position-y: 20px;
+        }
+        100% {
+            background-size: 80%;
+            background-position-x: 50%;
+        }
+
+    }
+
+    @keyframes backgroundZoomBackReset {
+        0% {
+            background-size: 80%;
+            background-position-x: 50%;
+
+        }
+        40%{
+            background-position-y: 20px;
+        }
+        100% {
+            background-size: 100%;
+            background-position-x: 50%;
         }
 
     }
@@ -221,7 +248,7 @@
         height: 200vh;
         top: -50vh;
         left: -50vw;
-        background: #00020E;
+        background: var(--bg);
         z-index: 100;
         display: inline-flex;
         justify-content: center;
@@ -251,10 +278,9 @@
         /*    centered, background color lighter than background, text color white*/
         width: 50vw;
         height: 7vh;
-        background: #1A1C27;
+        background: var(--bg);
         border: none;
         border-radius: 10px;
-        color: #FFF;
         font-family: Montserrat, serif;
         font-size: 2.5vw;
         font-style: normal;
@@ -266,6 +292,7 @@
         padding-left: 10px;
         cursor: none;
     }
+
 
     @keyframes shakeError {
         0% {
@@ -306,6 +333,19 @@
             scale: 100%;
         }
 
+
+    }
+
+    #reset{
+    /*    align to bottom right*/
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        background-color:var(--bg);
+        border: none;
+        border-radius: 10px;
+        padding: 10px;
+        cursor: pointer;
 
     }
 
@@ -352,7 +392,15 @@
             </div>
 
         </a>
+        <a class="projectBox" href="https://github.com/Gabibag/Sylm" id="sylmProject" onmouseenter="hover(this)"
+           onmouseleave="unHover(this)">
+            <div class="projectInfo">
+                <span class="projectText" id="Sylm">sylm</span>
+            </div>
+
+        </a>
     </div>
+    <button id="reset"> Reset </button>
 </div>
 </body>
 <script>
@@ -618,25 +666,56 @@
     }
 
     function removeLoadingScreen() {
-        document.getElementById("main").style.animation = "popUp 1.6s cubic-bezier(0,1.02,.39,1) forwards";
-        document.getElementById("main").style.animation = "popUp 1.6s cubic-bezier(0,1.02,.39,1) forwards";
+        document.getElementById("main").style.animation = "popUp 1.6s var(--anim-transition) forwards";
+        document.getElementById("main").style.animation = "popUp 1.6s var(--anim-transition) forwards";
         document.getElementById("loadingScreen").style.opacity = "0";
         setTimeout(function () {
             document.getElementById("loadingScreen").style.display = "none";
         }, 1000);
     }
 
+    let runningHovers = [];
+    let runningUnhovers = [];
+
     function hover(self) {
+        if(runningUnhovers.includes(self)) {
+            setTimeout(function () {
+                hover(self);
+            }, 4);
+            return;
+        };
         if (self.style.backgroundPositionY !== "0px") return;
-        self.style.animation = "backgroundSpin 0.7s cubic-bezier(0,.79,0,1.01) forwards";
-        self.style.backgroundPositionY = "5vh";
-        scrambleProjectName((self.children[0].children[(self.id === "githubLink") ? 1 : 0]));
+        self.style.filter = "grayscale(0)";
+        self.style.animation = "backgroundZoomBack 0.4s cubic-bezier(.42,.06,.28,1.02) forwards";
+        scrambleProjectName(self.children[0].children[(self.id === "githubLink") ? 1 : 0]);
+        // self.style.backgroundPositionY = "400px";
+        runningHovers.push(self);
+        setTimeout(function(){
+        //     get self in runningHovers and remove it
+            runningHovers.splice(runningHovers.indexOf(self),1);
+
+        },400)
     }
 
     function unHover(self) {
         // if (self.style.backgroundPositionY !== "1vw") return;
-        self.style.animation = "backgroundSpinReverse 0.7s cubic-bezier(0,.79,0,1.01) forwards";
+        if(runningHovers.includes(self)) {
+            setTimeout(function () {
+                unHover(self);
+            }, 2);
+            return;
+        };
+
+        self.style.animation = "backgroundZoomBackReset 0.4s cubic-bezier(.42,.06,.28,1.02) forwards";
+        self.style.filter = "grayscale(1)";
         self.style.backgroundPositionY = "0";
+        runningUnhovers.push(self);
+        setTimeout(function(){
+            //     get self in runningHovers and remove it
+            runningUnhovers.splice(runningUnhovers.indexOf(self),1);
+
+        },400)
+
         resetText(self.children[0].children[(self.id === "githubLink") ? 1 : 0]);
     }
 
