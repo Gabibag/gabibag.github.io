@@ -21,7 +21,7 @@
     }
 
     * {
-        font-family: Montserrat, serif;
+        font-family: 'Source Code Pro', monospace;
         color: var(--text);
         font-style: normal;
         line-height: normal;
@@ -33,7 +33,6 @@
 
     .title {
         text-align: center;
-        font-family: Montserrat, serif;
         font-weight: normal;
     }
 
@@ -41,7 +40,6 @@
     #mainTitle {
         text-align: center;
         text-shadow: 0 1px 4px rgba(255, 255, 255, 0.25);
-        font-family: Montserrat, serif;
         font-size: 63px;
 
         font-weight: 900;
@@ -54,7 +52,6 @@
 
     #subText {
         text-align: center;
-        font-family: Montserrat, serif;
         font-size: 18px;
         font-weight: 900;
         display: block;
@@ -273,7 +270,6 @@
         background: var(--bg);
         border: none;
         border-radius: 10px;
-        font-family: Montserrat, serif;
         font-size: 2.5vw;
         font-style: normal;
         font-weight: 900;
@@ -401,11 +397,18 @@
 <script>
 <!--    vars -->
     document.addEventListener("DOMContentLoaded", function () {
+        console.log("loaded");
         if (document.cookie.indexOf("username") === -1) {
             setTimeout(function () {
-                loginAnimation(1)
+                visitTimes();
+                loginAnimation(2)
             },timeout*30)
         } else {
+            if (visitTimes() > 20){
+                console.log("visited a lot, skipping login");
+                removeLoadingScreen();
+                return;
+            }
             setTimeout(function () {
                 loginScreen();
             },timeout*6)
@@ -413,6 +416,8 @@
     });
     let timeout = 50;
     let runScramble = true;
+
+
     const projectTexts = document.getElementsByClassName("projectText");
 
 
@@ -453,6 +458,19 @@
 
     }
 
+    function visitTimes() {
+        let cookies = document.cookie.split('; ');
+
+        let visits = cookies[cookies.indexOf(" visits")]?.split("=")[1];
+        console.log("visits:" + visits);
+        if (visits === undefined) {
+            visits = 0;
+        }
+        visits++;
+        document.cookie = "visits=" + visits + ";";
+        return visits;
+    }
+
     function loginAnimation(recursive) {
         if (recursive === 0) {
             return "n/o";
@@ -471,7 +489,7 @@
         setTimeout(function () {
             saveLogin(password.toString() + "/" + userName.toString())
             removeLoadingScreen();
-            loadPage()
+
             return password + "/" + userName;
             passwordBox.style.animation = "shakeError 0.4s cubic-bezier(.66,-0.71,.3,1.73) forwards";
             //delete the password and username one character at a time
@@ -498,12 +516,9 @@
     function saveLogin(pass) {
         document.cookie = "username=" + pass?.split("/")[1] + ";";
         document.cookie = "password=" + pass?.split("/")[0] + ";";
-
-
     }
     function loginKnown() {
-        let cookies = document.cookie.split(';');
-        console.log(cookies);
+        let cookies = document.cookie.split('; ');
         let login = cookies[0]?.split("=")[1];
 
         let password = cookies[1]?.split("=")[1];
@@ -529,44 +544,10 @@
                 loginKnown();
                 setTimeout(function () {
                     removeLoadingScreen();
-                    loadPage()
                 }, cookies[0].split("=")[1].length * timeout + cookies[1].split("=")[1].length * timeout +(timeout*17));
             }, timeout * 6);
         }
 
-    }
-    function elipsesTravel(text, elem, duration, interval) {
-        // slowly type out the text first, then add elipses
-
-        // slowTypeText(text, elem, interval / 4)
-        setTimeout(function () {
-            for (let j = 0; j < duration / 4; j++) {
-                for (let i = 0; i < 4; i++) {
-                    setTimeout(function () {
-                        elem.innerText = text + ".".repeat(i);
-                    }, interval * i + interval * j * 4);
-                }
-                setTimeout(function () {
-                    elem.innerText = text;
-
-                    elem.innerText = "";
-                }, interval * 4 + interval * j * 4);
-            }
-
-        }, interval / 4 * text.length);
-
-    }
-
-    let waits = 0;
-    function getTravelDuraion(duration, interval, text) {
-
-        waits += (duration * interval) + /*((interval / 4) * text.length)*/ + 00;
-        console.log(waits)
-        return waits;
-
-    }
-    function replaceText(text, elem) {
-        elem.innerText = text;
     }
 
     function loadPage() {
@@ -667,6 +648,7 @@
         setTimeout(function () {
             document.getElementById("loadingScreen").style.display = "none";
         }, 1000);
+        loadPage()
     }
 
     let runningHovers = [];
