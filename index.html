@@ -151,10 +151,12 @@
         background-size: cover;
         background-color: transparent;
         display: block;
+        position: absolute;
         align-items: center;
         top:10%;
-        transition: 0.7s var(--anim-transition);
-        z-index: 0projectInfo;
+        transition: var(--anim-transition) var(--duration);
+        z-index: 0;
+        filter: grayscale(1);
 
     }
     #keeper {
@@ -187,19 +189,7 @@
     }
 
 
-    @keyframes showIcon {
-        0% {
-            opacity: 0;
-            margin-right: 0;
-            /*width: 0;*/
-        }
-        100% {
-            opacity: 1;
-            margin-right: 0.5vw;
-            /*width: 7.5vh;*/
-        }
 
-    }
 
     a {
         text-decoration: none;
@@ -257,6 +247,19 @@
         padding-left: 10px;
         cursor: none;
     }
+    @keyframes showIcon {
+        0% {
+            opacity: 0;
+            margin-right: 0;
+            /*width: 0;*/
+        }
+        100% {
+            opacity: 1;
+            margin-right: 0.5vw;
+            /*width: 7.5vh;*/
+        }
+
+    }
     @keyframes backgroundZoomBack {
         0% {
             transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg);
@@ -267,18 +270,18 @@
 
         100% {
             transform: rotateX(30deg) rotateY(16deg) rotateZ(-7deg) skew(5deg, 2deg);
+            /*transform: rotateX(10deg) rotateY(19deg) rotateZ(-5deg) skew(4deg, 4deg);*/
             left: 5%;
-            scale: 0.7;
-            top: -80%;
+            top: 5%;
         }
 
     }
     @keyframes backgroundZoomBackReset {
         0% {
             transform: rotateX(30deg) rotateY(16deg) rotateZ(-7deg) skew(5deg, 2deg);
+            /*transform: rotateX(10deg) rotateY(19deg) rotateZ(-5deg) skew(4deg, 4deg);*/
             left: 5%;
-            scale: 0.7;
-            top: -80%;
+            top: 5%;
         }
         100% {
             transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg);
@@ -355,7 +358,16 @@
         cursor: pointer;
 
     }
-
+    .gradient{
+        background: linear-gradient(45deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        background-blend-mode: color;
+        left: 0;
+        pointer-events: none;
+    }
 
 </style>
 
@@ -374,9 +386,11 @@
 
     <div id="projectsContainer">
         <a class="projectContainer" href="https://github.com/Gabibag" id="githubLink" >
-            <img class="imageHolder" onmouseenter="hover(this)" src='https://drive.google.com/uc?export=download&id=1OAiMApiuYEvVkD_0Cq9EyCI9VwNYviiX'
-                 onmouseleave="unHover(this)" position: absolute">
+            <img class="imageHolder" onmouseenter="hover(this)"
+                    src='https://drive.google.com/uc?export=download&id=1OAiMApiuYEvVkD_0Cq9EyCI9VwNYviiX'
+                    onmouseleave="unHover(this)">
             </img>
+            <div class="gradient"></div>
             <div class="projectInfo">
                 <svg class="icons" height="4.5vw" id="githubIcon" viewBox="0 0 24 24" width="4.5vw"
                      xmlns="http://www.w3.org/2000/svg">
