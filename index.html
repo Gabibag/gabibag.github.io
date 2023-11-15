@@ -11,12 +11,12 @@
     /*html {*/
     /*    overflow-x: hidden;*/
     /*}*/
-    :root{
+    :root {
         --bg: black;
         --text: white;
         --accent: #2a2a2a;
         --anim-transition: cubic-bezier(0, .79, 0, 1.01); /*This is the load after the "log in" animation*/
-        --transition: cubic-bezier(.24,1.11,.49,.96);
+        --transition: cubic-bezier(.24, 1.11, .49, .96);
         --duration: 0.7s;
     }
 
@@ -39,7 +39,7 @@
 
     #mainTitle {
         text-align: center;
-        text-shadow: 0 1px 4px rgba(255, 255, 255, 0.25);
+
         font-size: 63px;
 
         font-weight: 900;
@@ -49,6 +49,7 @@
         top: 4vh;
         margin-bottom: auto;
     }
+    .title
 
     #subText {
         text-align: center;
@@ -81,6 +82,7 @@
         font-weight: 900;
         position: relative;
 
+
         /*    centered*/
 
     }
@@ -95,7 +97,8 @@
         display: inline-flex;
         justify-content: center;
         vertical-align: center;
-
+        pointer-events: none;
+        z-index: 1;
     }
 
     .icons {
@@ -113,7 +116,7 @@
         opacity: 1;
     }
 
-    .projectBox {
+    .projectContainer { /*Holds the project background, not the image*/
         border-radius: 17px;
         /*background: var(--accent);*/
         text-align: center;
@@ -127,19 +130,33 @@
         flex-direction: column;
         opacity: 1;
         margin-bottom: 1%;
-        filter: grayscale(1);
         background-position-y: 400px;
         background-clip: content-box;
         background-repeat: no-repeat;
         background-size: cover;
+        overflow: hidden;
         background-color: var(--accent);
+        position: absolute;
     }
 
-    .projectBox:active{
+    .projectContainer:active {
         transform: scale(0.99);
-
     }
 
+    .imageHolder{
+        width: 100%;
+        /*height: 100%;*/
+        background-clip: content-box;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-color: transparent;
+        display: block;
+        align-items: center;
+        top:10%;
+        transition: 0.7s var(--anim-transition);
+        z-index: 0projectInfo;
+
+    }
     #keeper {
         background-image: url("https://drive.google.com/uc?export=download&id=1lIaUYrm1DPrOel3JMGXcm5Axirwhxr9T");
         grid-area: 2 / 1 / 3 / 3;
@@ -147,8 +164,11 @@
 
 
     #githubLink {
-        background-image: url("https://drive.google.com/uc?export=download&id=1OAiMApiuYEvVkD_0Cq9EyCI9VwNYviiX");
+
         grid-area: 1 / 1 / 2 / 5;
+    }
+    #githubImage{
+        background-image: url("https://drive.google.com/uc?export=download&id=1OAiMApiuYEvVkD_0Cq9EyCI9VwNYviiX");
     }
 
     #chess {
@@ -156,16 +176,15 @@
         grid-area: 2 / 3 / 3 / 5;
     }
 
-    #sylmProject{
+    #sylmProject {
         background-image: url("https://drive.google.com/uc?export=download&id=1wx9fOYNu-1F4X6aqf5MnNHZwHuY702FF");
         grid-area: 3 / 1 / 4 / 2;
     }
 
-    #bite{
+    #bite {
         background-image: url("https://drive.google.com/uc?export=download&id=1zhdjn2GkKovT4dowwvC_t-8TF9Timxey");
         grid-area: 3 / 2 / 4 / 5;
     }
-
 
 
     @keyframes showIcon {
@@ -188,48 +207,6 @@
 
 
 
-    @keyframes backgroundZoomBack {
-        0% {
-            background-size: 100%;
-            background-position-x: 50%;
-        }
-        50%{
-            background-position-y: 5px;
-        }
-        100% {
-            background-size: 90%;
-            background-position-x: 50%;
-        }
-
-    }
-
-    @keyframes backgroundZoomBackReset {
-        0% {
-            background-size: 90%;
-            background-position-x: 50%;
-
-        }
-        50%{
-            background-position-y: 10px;
-        }
-        100% {
-            background-size: 100%;
-            background-position-x: 50%;
-        }
-
-    }
-
-    @keyframes fadeUp {
-        0% {
-            opacity: 1;
-            scale: 1;
-        }
-        100% {
-            opacity: 0;
-            scale: 0.8;
-        }
-
-    }
 
     #loadingScreen {
         position: absolute;
@@ -280,7 +257,49 @@
         padding-left: 10px;
         cursor: none;
     }
+    @keyframes backgroundZoomBack {
+        0% {
+            transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg);
+            left: 0;
+            scale: 1;
+            top: 0;
+        }
 
+        100% {
+            transform: rotateX(30deg) rotateY(16deg) rotateZ(-7deg) skew(5deg, 2deg);
+            left: 5%;
+            scale: 0.7;
+            top: -80%;
+        }
+
+    }
+    @keyframes backgroundZoomBackReset {
+        0% {
+            transform: rotateX(30deg) rotateY(16deg) rotateZ(-7deg) skew(5deg, 2deg);
+            left: 5%;
+            scale: 0.7;
+            top: -80%;
+        }
+        100% {
+            transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg);
+            left: 0;
+            scale: 1;
+            top: 0;
+        }
+
+    }
+
+    @keyframes fadeUp {
+        0% {
+            opacity: 1;
+            scale: 1;
+        }
+        100% {
+            opacity: 0;
+            scale: 0.8;
+        }
+
+    }
 
     @keyframes shakeError {
         0% {
@@ -324,12 +343,12 @@
 
     }
 
-    #reset{
-    /*    align to bottom right*/
+    #reset {
+        /*    align to bottom right*/
         position: absolute;
         bottom: 0px;
         right: 0px;
-        background-color:var(--bg);
+        background-color: var(--bg);
         border: none;
         border-radius: 10px;
         padding: 10px;
@@ -354,8 +373,10 @@
     </div>
 
     <div id="projectsContainer">
-        <a class="projectBox" href="https://github.com/Gabibag" id="githubLink" onmouseenter="hover(this)"
-           onmouseleave="unHover(this)">
+        <a class="projectContainer" href="https://github.com/Gabibag" id="githubLink" >
+            <img class="imageHolder" onmouseenter="hover(this)" src='https://drive.google.com/uc?export=download&id=1OAiMApiuYEvVkD_0Cq9EyCI9VwNYviiX'
+                 onmouseleave="unHover(this)" position: absolute">
+            </img>
             <div class="projectInfo">
                 <svg class="icons" height="4.5vw" id="githubIcon" viewBox="0 0 24 24" width="4.5vw"
                      xmlns="http://www.w3.org/2000/svg">
@@ -365,53 +386,53 @@
             </div>
         </a>
         <br>
-        <a class="projectBox" href="https://github.com/Gabibag/KeepersLand" id="keeper" onmouseenter="hover(this)"
+        <a class="projectContainer" href="https://github.com/Gabibag/KeepersLand" id="keeper" onmouseenter="hover(this)"
            onmouseleave="unHover(this)">
             <div class="projectInfo">
                 <span class="projectText" id="Keeper's_Land">Keeper's Land</span>
             </div>
         </a>
         <br>
-        <a class="projectBox" href="https://github.com/WilyHyperion/IllegalChess" id="chess" onmouseenter="hover(this)"
+        <a class="projectContainer" href="https://github.com/WilyHyperion/IllegalChess" id="chess" onmouseenter="hover(this)"
            onmouseleave="unHover(this)">
             <div class="projectInfo">
                 <span class="projectText" id="Illegal_Chess">illegal_chess</span>
             </div>
         </a>
-        <a class="projectBox" href="https://github.com/Gabibag/Sylm" id="sylmProject" onmouseenter="hover(this)"
+        <a class="projectContainer" href="https://github.com/Gabibag/Sylm" id="sylmProject" onmouseenter="hover(this)"
            onmouseleave="unHover(this)">
             <div class="projectInfo">
                 <span class="projectText" id="Sylm">sylm</span>
             </div>
         </a>
-        <a class="projectBox" href="https://github.com/Gabibag/ShareABite" id="bite" onmouseenter="hover(this)"
+        <a class="projectContainer" href="https://github.com/Gabibag/ShareABite" id="bite" onmouseenter="hover(this)"
            onmouseleave="unHover(this)">
             <div class="projectInfo">
                 <span class="projectText" id="Share_a_Bite">shareabite</span>
             </div>
         </a>
     </div>
-    <button id="reset"> Reset </button>
+    <button id="reset"> Reset</button>
 </div>
 </body>
 <script>
-<!--    vars -->
+    <!--    vars -->
     document.addEventListener("DOMContentLoaded", function () {
         console.log("loaded");
         if (document.cookie.indexOf("username") === -1) {
             setTimeout(function () {
                 visitTimes();
                 loginAnimation(2)
-            },timeout*30)
+            }, timeout * 30)
         } else {
-            if (visitTimes() > 20){
+            if (visitTimes() > 20) {
                 console.log("visited a lot, skipping login");
                 removeLoadingScreen();
                 return;
             }
             setTimeout(function () {
                 loginScreen();
-            },timeout*6)
+            }, timeout * 6)
         }
     });
     let timeout = 50;
@@ -424,14 +445,16 @@
     for (let i = 0; i < document.getElementsByClassName("inputBox").length; i++) {
         document.getElementsByClassName("inputBox")[i].disabled = true;
     }
+
     function createUsername() {
-        let userNamesAdj = ["Wandering", "Soaring", "Swimming", "Floating", "Magical", "Mathematical", "Minty", "Stumbling", "Misspelled", "Pocket", "Tiny", "Obscure", "Magical", "Undercover", "Sparkling", "Maniacal", "Differentiating", "Burning","Categorical","Undeniable", "Shocking","Undetermined", "Determined","Freeing","Computing","Understanding","Spilt","Spontanous","Unsyncing","Stalled", "Speedy","Slowed", "Mystical","Lost", "Salty", "Sweet", "Soft", "Unified","Unrelenting","Niche", "Spiraling", "Rough", "Spiky","Stuffy","Peculiar", "Positive", "Loud", "Quiet", "Submerged","Silky"]
-        let userNamesNoun = ["Platypus", "Fish", "Wombat", "Wizard", "Train", "Car", "House", "Ticket", "Seven", "Penguin", "Computer", "Window", "Apple", "Leaf", "Semicolon", "Flame", "Star", "Snake", "Symbol", "Ornament", "Seascape", "Territory","Snail","Scar","Sky","Sea","Door","Knob","Dough","Bread","Keyboard","Mouse","Leach","Spice","Sink","Faucet","Cup","Mug","Plate","Bowl","Spoon","Fork","Knife","Pencil","Pen","Paper","Notebook","Book","Novel","Story","Tale","Teller","Singer","Song","Music","Melody","Rhythm","Beat","Drum","Guitar","Piano","Trumpet","Trombone","Tuba","Flute"]
+        let userNamesAdj = ["Wandering", "Soaring", "Swimming", "Floating", "Magical", "Mathematical", "Minty", "Stumbling", "Misspelled", "Pocket", "Tiny", "Obscure", "Magical", "Undercover", "Sparkling", "Maniacal", "Differentiating", "Burning", "Categorical", "Undeniable", "Shocking", "Undetermined", "Determined", "Freeing", "Computing", "Understanding", "Spilt", "Spontanous", "Unsyncing", "Stalled", "Speedy", "Slowed", "Mystical", "Lost", "Salty", "Sweet", "Soft", "Unified", "Unrelenting", "Niche", "Spiraling", "Rough", "Spiky", "Stuffy", "Peculiar", "Positive", "Loud", "Quiet", "Submerged", "Silky"]
+        let userNamesNoun = ["Platypus", "Fish", "Wombat", "Wizard", "Train", "Car", "House", "Ticket", "Seven", "Penguin", "Computer", "Window", "Apple", "Leaf", "Semicolon", "Flame", "Star", "Snake", "Symbol", "Ornament", "Seascape", "Territory", "Snail", "Scar", "Sky", "Sea", "Door", "Knob", "Dough", "Bread", "Keyboard", "Mouse", "Leach", "Spice", "Sink", "Faucet", "Cup", "Mug", "Plate", "Bowl", "Spoon", "Fork", "Knife", "Pencil", "Pen", "Paper", "Notebook", "Book", "Novel", "Story", "Tale", "Teller", "Singer", "Song", "Music", "Melody", "Rhythm", "Beat", "Drum", "Guitar", "Piano", "Trumpet", "Trombone", "Tuba", "Flute"]
         let differentiator = ["_", ""]
 
         return userNamesAdj[Math.floor(Math.random() * userNamesAdj.length)] + differentiator[Math.floor(Math.random() * differentiator.length)] + userNamesNoun[Math.floor(Math.random() * userNamesNoun.length)];
 
     }
+
     function createPassword() {
         //toatally accurate password generator
         let password = "";
@@ -443,6 +466,7 @@
         return password;
 
     }
+
     function slowTypeBox(text, inputBox, timeout) {
         if (text === undefined) {
             console.log("undefined");
@@ -453,7 +477,6 @@
                 inputBox.value += text.charAt(i);
             }, timeout * i);
         }
-
 
 
     }
@@ -477,7 +500,6 @@
 
         }
         let loginBox = document.getElementById("loginBox");
-
         let passwordBox = document.getElementById("passwordBox");
         let userName = createUsername();
         let password = createPassword();
@@ -489,10 +511,8 @@
         setTimeout(function () {
             saveLogin(password.toString() + "/" + userName.toString())
             removeLoadingScreen();
-
             return password + "/" + userName;
             passwordBox.style.animation = "shakeError 0.4s cubic-bezier(.66,-0.71,.3,1.73) forwards";
-            //delete the password and username one character at a time
             for (let i = 0; i < userName.length; i++) {
                 setTimeout(function () {
                     loginBox.value = loginBox.value.slice(0, -1);
@@ -510,13 +530,14 @@
             setTimeout(function () {
                 loginAnimation(recursive - 1);
             }, (timeout * userName.length + timeout * password.length) * 2 + timeout * 15);
-        }, timeout * userName.length + timeout * password.length + timeout * 15 )
+        }, timeout * userName.length + timeout * password.length + timeout * 15)
     }
 
     function saveLogin(pass) {
         document.cookie = "username=" + pass?.split("/")[1] + ";";
         document.cookie = "password=" + pass?.split("/")[0] + ";";
     }
+
     function loginKnown() {
         let cookies = document.cookie.split('; ');
         let login = cookies[0]?.split("=")[1];
@@ -528,23 +549,23 @@
 
         setTimeout(function () {
             slowTypeBox(password, document.getElementById("passwordBox"), timeout);
-        }, login.length * timeout + (timeout*10));
+        }, login.length * timeout + (timeout * 10));
 
     }
+
     function loginScreen() {
         let cookies = document.cookie?.split(';');
         console.log(cookies[1]);
         if (cookies.findIndex((cookie) => cookie.includes("username")) === -1) {
             setInterval(function () {
                 loginAnimation(1);
-            },1000)
-        }
-        else {
+            }, 1000)
+        } else {
             setTimeout(function () {
                 loginKnown();
                 setTimeout(function () {
                     removeLoadingScreen();
-                }, cookies[0].split("=")[1].length * timeout + cookies[1].split("=")[1].length * timeout +(timeout*17));
+                }, cookies[0].split("=")[1].length * timeout + cookies[1].split("=")[1].length * timeout + (timeout * 17));
             }, timeout * 6);
         }
 
@@ -655,43 +676,45 @@
     let runningUnhovers = [];
 
     function hover(self) {
-        if(runningUnhovers.includes(self)) {
+        if (runningUnhovers.includes(self)) {
             setTimeout(function () {
                 hover(self);
             }, 4);
             return;
-        };
+        }
+        ;
         if (self.style.backgroundPositionY !== "0px") return;
         self.style.filter = "grayscale(0)";
         self.style.animation = "backgroundZoomBack 0.4s cubic-bezier(.42,.06,.28,1.02) forwards";
         scrambleProjectName(self.children[0].children[(self.id === "githubLink") ? 1 : 0]);
         // self.style.backgroundPositionY = "400px";
         runningHovers.push(self);
-        setTimeout(function(){
-        //     get self in runningHovers and remove it
-            runningHovers.splice(runningHovers.indexOf(self),1);
+        setTimeout(function () {
+            //     get self in runningHovers and remove it
+            runningHovers.splice(runningHovers.indexOf(self), 1);
 
-        },400)
+        }, 400)
     }
 
     function unHover(self) {
         // if (self.style.backgroundPositionY !== "1vw") return;
-        if(runningHovers.includes(self)) {
+        if (runningHovers.includes(self)) {
             setTimeout(function () {
                 unHover(self);
             }, 2);
             return;
-        };
+        }
+        ;
 
         self.style.animation = "backgroundZoomBackReset 0.4s cubic-bezier(.42,.06,.28,1.02) forwards";
         self.style.filter = "grayscale(1)";
         self.style.backgroundPositionY = "0";
         runningUnhovers.push(self);
-        setTimeout(function(){
+        setTimeout(function () {
             //     get self in runningHovers and remove it
-            runningUnhovers.splice(runningUnhovers.indexOf(self),1);
+            runningUnhovers.splice(runningUnhovers.indexOf(self), 1);
 
-        },400)
+        }, 400)
 
         resetText(self.children[0].children[(self.id === "githubLink") ? 1 : 0]);
     }
